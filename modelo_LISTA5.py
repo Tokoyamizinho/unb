@@ -1,16 +1,4 @@
-# corrected_modelo_LISTA5.py
-"""
-Optimized ConvNeXt-Tiny + handcrafted features + OPTUNA TUNING (Fast mode for Optuna)
 
-Principais mudanças:
- - Light augmentations durante Optuna (rápido)
- - Full augmentations no treino final
- - DataLoader otimizado: num_workers, pin_memory, persistent_workers, prefetch_factor
- - Mixed precision (AMP) quando GPU disponível
- - Precompute features robusto
- - Freeze/unfreeze por stage no ConvNeXt (mais controlado)
- - Melhor cálculo de weighted sampler e reutilização
-"""
 
 import os
 import random
@@ -47,15 +35,15 @@ DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 # Configurações Fixas
 BATCH_SIZE = 32
-# Sugestão prática: use min(4, os.cpu_count()//2) para evitar sobrecarga no Windows
+
 NUM_WORKERS = 0
 SEED = 1910
 TARGET_SIZE = 320  # use 256 se quiser mais velocidade (teste)
 
 # Configurações do Optuna
-N_TRIALS = 20          # aumentar se quiser mais busca
-OPTUNA_EPOCHS = 6     # reduzido para busca (pruning ajuda)
-FINAL_EPOCHS = 45      # treino final com melhores params
+N_TRIALS = 20          
+OPTUNA_EPOCHS = 6     
+FINAL_EPOCHS = 45      
 
 # Caching
 PRECOMPUTE_FEATURES = True
@@ -594,7 +582,7 @@ def main():
     criterion = nn.CrossEntropyLoss()
     scaler = get_grad_scaler(DEVICE)
 
-    # use DataLoader with full augmentations for training (reuse sampler)
+   
     train_loader_final = DataLoader(
         train_ds_full,
         batch_size=BATCH_SIZE,
@@ -635,3 +623,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+

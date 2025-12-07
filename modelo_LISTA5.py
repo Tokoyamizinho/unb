@@ -26,21 +26,21 @@ import optuna
 from optuna.trial import TrialState
 
 # -------------------------
-# USER CONFIG
+# DIR
 # -------------------------
 TRAIN_DIR = r"C:/Users/José Eduardo/OneDrive/Desktop/pyton/dataset/train"
 TEST_DIR  = r"C:/Users/José Eduardo/OneDrive/Desktop/pyton/dataset/test"
 OUTPUT_CSV = "predicoes_convnext_optuna.csv"
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-# Configurações Fixas
+# FIX SETTS
 BATCH_SIZE = 32
 
 NUM_WORKERS = 0
 SEED = 1910
 TARGET_SIZE = 320  # use 256 se quiser mais velocidade (teste)
 
-# Configurações do Optuna
+# OPTUNA SETTS
 N_TRIALS = 20          
 OPTUNA_EPOCHS = 6     
 FINAL_EPOCHS = 45      
@@ -53,7 +53,7 @@ PATHS_CACHE = "paths_cache.npy"
 # Optuna light augmentation flag
 USE_LIGHT_AUG_FOR_OPTUNA = True
 
-# Reprodutibilidade
+# REP
 def seed_everything(seed=SEED):
     random.seed(seed)
     np.random.seed(seed)
@@ -623,4 +623,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
